@@ -1,0 +1,113 @@
+@mixin make-flexbox-layout($breakpoint: '') {
+  
+  ////////////
+  // Layout //
+  ////////////
+  
+  .layout.horizontal#{$breakpoint},
+  .layout.vertical#{$breakpoint} {
+    display: flex;
+  }
+  .layout.inline#{$breakpoint} {
+    display: inline-flex;
+  }
+  .layout.horizontal#{$breakpoint} {
+    flex-direction: row;
+  }
+  .layout.vertical#{$breakpoint} {
+    flex-direction: column;
+  }
+  .layout.wrap#{$breakpoint} {
+    flex-wrap: wrap;
+  }
+
+  ////////////////////
+  // Flexible items //
+  ////////////////////
+  
+  .flex#{$breakpoint} {
+    flex: 1;
+  }
+  .flex#{$breakpoint}-auto {
+    flex: 1 1 auto;
+  }
+  .flex#{$breakpoint}-none {
+    flex: none;
+  }
+
+  ///////////////
+  // Alignment //
+  ///////////////
+  
+  .layout.center#{$breakpoint},
+  .layout.center#{$breakpoint}-y {
+    align-items: center;
+  }
+  .layout.center#{$breakpoint},
+  .layout.center#{$breakpoint}-x {
+    justify-content: center;
+  }
+  .layout.start#{$breakpoint},
+  .layout.start#{$breakpoint}-y {
+    align-items: flex-start;
+  }
+  .layout.start#{$breakpoint},
+  .layout.start#{$breakpoint}-x {
+    justify-content: flex-start;
+  }
+  .layout.end#{$breakpoint},
+  .layout.end#{$breakpoint}-y {
+    align-items: flex-end;
+  }
+  .layout.end#{$breakpoint},
+  .layout.end#{$breakpoint}-x {
+    justify-content: flex-end;
+  }
+
+  ////////////////////
+  // Self alignment //
+  ////////////////////
+  
+  .self-start#{$breakpoint},
+  .self-start#{$breakpoint}-y {
+    align-self: flex-start;
+  }
+  .self-start#{$breakpoint},
+  .self-start#{$breakpoint}-x {
+    justify-self: flex-start;
+  }
+  .self-end#{$breakpoint},
+  .self-end#{$breakpoint}-y {
+    align-self: flex-end;
+  }
+  .self-end#{$breakpoint},
+  .self-end#{$breakpoint}-x {
+    justify-self: flex-end;
+  }
+  .self-center#{$breakpoint},
+  .self-center#{$breakpoint}-y {
+    align-self: center;
+  }
+  .self-center#{$breakpoint},
+  .self-center#{$breakpoint}-x {
+    justify-self: center;
+  }
+}
+
+@include media-breakpoint-up(xs) {
+  @include make-flexbox-layout();
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-only($breakpoint) {
+    @include make-flexbox-layout(-#{$breakpoint});
+  }
+  @if not ($breakpoint == xs) {
+    @include media-breakpoint-up($breakpoint) {
+      @include make-flexbox-layout(-#{$breakpoint}-up);
+    }
+    @include media-breakpoint-down($breakpoint) {
+      @include make-flexbox-layout(-#{$breakpoint}-down);
+    }
+  }
+}
